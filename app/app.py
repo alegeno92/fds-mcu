@@ -44,7 +44,6 @@ class App(Thread):
         )
 
     def reset(self):
-        self.configurations
         self.logger.debug('RESET')
         self.mcu = McuArduinoReader(
             id=self.configurations['CLIENT_ID'],

@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 
 import smbus2
@@ -65,9 +66,6 @@ class McuArduinoReader(Reader):
         self.bus = None
         self.i2c_bus = i2c_bus
         self.i2c_address = i2c_address
-
-        if not self.dummy_data:
-            self.bus = smbus2.SMBus()
 
     def read4_bytes_float(self, dev, start_reg, n_bytes=None):
         value = [0, 0, 0, 0]
@@ -207,7 +205,8 @@ class McuArduinoReader(Reader):
 
         self.logger.debug('Open i2c_bus %s i2c_address %s', self.i2c_bus, self.i2c_address)
         try:
-            self.bus.open(self.i2c_bus)
+            self.bus = smbus2.SMBus(bus=self.i2c_bus)
+            time.sleep(0.5)
         except Exception as e:
             raise e
 
@@ -228,7 +227,10 @@ class McuArduinoReader(Reader):
         except Exception as e:
             raise e
         finally:
+            self.logger.debug('close i2c bus')
+            time.sleep(0.5)
             self.bus.close()
+            self.bus = None
 
         return data
 
