@@ -165,7 +165,7 @@ class McuArduinoReader(Reader):
         return SensorValue(self.id, CC_CURRENT_LABEL, value, int(datetime.now().timestamp()))
 
     def get_ac_current(self, channel):
-        self.logger.debug("Requested AC current from clamp ", str(channel))
+        self.logger.debug("Requested AC current from clamp %s", channel)
 
         if channel == 1:
             AC_CURRENT_REGISTER = AC1_CURRENT_REGISTER
