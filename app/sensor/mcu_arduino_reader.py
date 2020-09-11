@@ -227,6 +227,8 @@ class McuArduinoReader(Reader):
 
         except Exception as e:
             raise e
+        finally:
+            self.bus.close()
 
         return data
 
